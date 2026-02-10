@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cynthia 1920 - Risultati e Classifiche</title>
+    <style>
+        :root {
+            --cynthia-blue: #4A90E2;
+            --cynthia-dark: #1A3A5A;
+            --cynthia-gold: #D4AF37;
+            --bg-color: #f0f4f8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+
+        /* Tasto Sito Ufficiale */
+        .btn-official {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: var(--cynthia-gold);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .btn-official:active {
+            transform: scale(0.95);
+        }
+
+        .logo {
+            max-width: 110px;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 { color: var(--cynthia-dark); margin: 5px 0 15px 0; font-size: 1.3rem; }
+
+        .select-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--cynthia-blue);
+            font-size: 16px;
+            background: white;
+            color: var(--cynthia-dark);
+            font-weight: bold;
+            outline: none;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .tab-btn {
+            padding: 10px 8px;
+            border: 2px solid var(--cynthia-blue);
+            background: white;
+            color: var(--cynthia-blue);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            flex: 1 1 30%; /* Tre bottoni per riga su mobile */
+            max-width: 110px;
+        }
+
+        .tab-btn.active {
+            background: var(--cynthia-blue);
+            color: white;
+        }
+
+        .widget-container {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 15px;
+            border-top: 5px solid var(--cynthia-gold);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="https://linktr.ee/cynthia1920" class="btn-official">
+        ⬅ Torna al sito ufficiale
+    </a>
+
+    <img src="https://www.tuttocampo.it/Web/Images/Teams/Original/919421.png" alt="Cynthia 1920 Logo" class="logo">
+    <h2>Cynthia 1920</h2>
+    
+    <div class="select-container">
+        <select id="teamSelector" onchange="updateTeam()">
+            <option value="b6927c0d-b51c-4e1e-8684-83397d354a5f">Promozione - Girone D</option>
+            <option value="b888e1b1-9525-481c-a4b2-13ce1fca1e76">Juniores U19 - Girone B</option>
+            <option value="9a10af44-67a9-4d46-9770-26674b9efb46">Allievi U17 - Girone E</option>
+            <option value="fcc849b6-0f42-4238-98f0-6584c001d20d">Allievi U16 - Girone D</option>
+            <option value="e6db5760-7fe3-41a0-b01a-04eae66a52bf">Giovanissimi U15 - Girone F</option>
+            <option value="3f062649-14a2-4c1a-a551-c65fa549b5f6">Giovanissimi U14 - Girone F</option>
+            <option value="2d1bbd7a-c45c-43f9-a24c-a73d9f177997">Giovanissimi U14 - Girone I</option>
+        </select>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showWidget('Risultati', this)">Risultati</button>
+        <button class="tab-btn" onclick="showWidget('Classifica', this)">Classifica</button>
+        <button class="tab-btn" onclick="showWidget('Marcatori', this)">Marcatori</button>
+        <button class="tab-btn" onclick="showWidget('Partita', this)">Ultima</button>
+        <button class="tab-btn" onclick="showWidget('ProssimaPartita', this)">Prossima</button>
+    </div>
+</header>
+
+<div id="main-widget" class="widget-container">
+    <iframe id="content-frame" src="" scrolling="no" loading="lazy"></iframe>
+</div>
+
+<div class="footer">
+    © Cynthia 1920 | Dati ufficiali Tuttocampo.it
+</div>
+
+<script>
+    let currentType = 'Risultati';
+    const heights = {
+        'Risultati': 600,
+        'Classifica': 800,
+        'Marcatori': 700,
+        'Partita': 350,
+        'ProssimaPartita': 350
+    };
+
+    function updateTeam() {
+        const teamID = document.getElementById('teamSelector').value;
+        const frame = document.getElementById('content-frame');
+        frame.src = `https://www.tuttocampo.it/WidgetV2/${currentType}/${teamID}`;
+        frame.height = heights[currentType];
+    }
+
+    function showWidget(type, btn) {
+        currentType = type;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateTeam();
+    }
+
+    // Avvio automatico
+    window.onload = updateTeam;
+</script>
+
+</body>
+</html>
